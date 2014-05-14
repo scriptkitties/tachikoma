@@ -18,10 +18,10 @@ bot = Cinch::Bot.new do
     c.channels        = ["#scriptkitties"]
 
     # SSL config
-    c.ssl.ca_path     = "/etc/ssl/certs/"
-    c.ssl.client_cert = ""
-    c.ssl.use         = true
-    c.ssl.verify      = true
+#    c.ssl.ca_path     = "/etc/ssl/certs/"
+#    c.ssl.client_cert = ""
+#    c.ssl.use         = true
+#    c.ssl.verify      = true
 
     # Loaded plugins
     c.plugins.plugins = [
