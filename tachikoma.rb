@@ -1,10 +1,26 @@
 #!/usr/bin/env ruby
 
-# Require the framework
-require 'cinch'
+# Require dependencies
+require "cinch"
+require "json"
+require "sequel"
 
 # Require all of our plugins
-Dir[File.dirname(__FILE__) + '/plugins/*.rb'].each {|file| require file}
+Dir[File.dirname(__FILE__)+"/plugins/*.rb"].each {|file| require file}
+
+# Read the configuration file
+conf = JSON.parse(IO.read(File.dirname(__FILE__)+"/conf/tachikoma.json"));
+
+# Create all databases
+$DB = Hash.new
+
+conf["databases"].each do |db|
+  # Generate the DNS
+  dns = db[1]["driver"]+"://"+db[1]["username"]+":"+db[1]["password"]+"@"+db[1]["host"]+"/"+db[1]["db"]
+
+  # Create the dabatase connection
+  $DB[db[0]] = Sequel.connect(dns)
+end
 
 # Create the bot instance
 bot = Cinch::Bot.new do
@@ -15,7 +31,7 @@ bot = Cinch::Bot.new do
     c.nick            = "tachikoma"
     c.user            = "cinch"
     c.realname        = "Tachikoma"
-    c.channels        = ["#scriptkitties"]
+    c.channels        = ["#tyil"]
 
     # SSL config
     c.ssl.client_cert = "/srv/tachikoma/cert/rizon.pem"
