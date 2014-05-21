@@ -24,6 +24,7 @@ bot = Cinch::Bot.new do
     # Loaded plugins
     c.plugins.plugins = [
       Controls,
+      Epeen,
       Social
     ]
   end
