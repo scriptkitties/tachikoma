@@ -34,7 +34,7 @@ bot = Cinch::Bot.new do
     c.nick            = "tachikoma"
     c.user            = "cinch"
     c.realname        = "Tachikoma"
-    c.channels        = ["#tyil"]
+    c.channels        = ["#scriptkitties"]
 
     # SSL config
     c.ssl.client_cert = "/srv/tachikoma/cert/rizon.pem"
