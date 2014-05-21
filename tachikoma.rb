@@ -16,11 +16,14 @@ $DB = Hash.new
 
 conf["databases"].each do |db|
   # Generate the DNS
-  dns = db[1]["driver"]+"://"+db[1]["username"]+":"+db[1]["password"]+"@"+db[1]["host"]+"/"+db[1]["db"]
+  dsn = db[1]["driver"]+"://"+db[1]["username"]+":"+db[1]["password"]+"@"+db[1]["host"]+"/"+db[1]["db"]
 
   # Create the dabatase connection
-  $DB[db[0]] = Sequel.connect(dns)
+  $DB[db[0]] = Sequel.connect(dsn)
 end
+
+# Now that we got our database connections, we can also load our models
+Dir[File.dirname(__FILE__)+"/models/*.rb"].each {|file| require file}
 
 # Create the bot instance
 bot = Cinch::Bot.new do
