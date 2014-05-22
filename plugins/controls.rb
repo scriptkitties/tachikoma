@@ -4,12 +4,8 @@ require "cinch"
 
 class Controls
   include Cinch::Plugin
-
   set :prefix, /^!/
 
-  match(/join (S+)/)
-  def execute(m, channel)
-    bot.join channel
   match(/join (\w+)/i, method: :join)
   def join(m, channel)
     adminArray = ['tyiwi', 'Beagon', 'tyil']
