@@ -16,7 +16,6 @@ class Controls
    end
   end
 
-  # todo: invite - Let the bot invite someone (and give this nick +v when it joins)
   # todo: kick - Let the bot kick someone
   match(/say (.*)/i, method: :say)
   def say(m, text)
@@ -41,6 +40,14 @@ class Controls
      channelAppend = "#"
      channelAppend += channel
      bot.part channelAppend
+   end
+  end
+
+  match(/invite (\w+)/i, method: :invite)
+  def invite(m, user)
+    adminArray = ['tyiwi', 'Beagon', 'tyil']
+    if adminArray.include? m.user.nick
+     m.channel.invite user
    end
   end
 
