@@ -25,6 +25,15 @@ class Controls
      m.reply text
    end
   end
+
+  match(/emote (.*)/i, method: :emote)
+  def emote(m, text)
+    adminArray = ['tyiwi', 'Beagon', 'tyil']
+    if adminArray.include? m.user.nick
+     m.action_reply text
+   end
+  end
+
   match(/part (\w+)/i, method: :part)
   def part(m, channel)
     adminArray = ['tyiwi', 'Beagon', 'tyil']
