@@ -83,6 +83,22 @@ class Controls
    end
   end
 
+  match(/ban (\w+)/i, method: :ban)
+  def ban(m, user)
+    adminArray = ['tyiwi', 'Beagon', 'tyil']
+    if adminArray.include? m.user.nick
+     m.channel.ban(user)
+   end
+  end
+
+  match(/unban (\w+)/i, method: :unban)
+  def unban(m, user)
+    adminArray = ['tyiwi', 'Beagon', 'tyil']
+    if adminArray.include? m.user.nick
+     m.channel.unban(user)
+   end
+  end
+
   match "quit"
   def execute(m)
     adminArray = ['tyiwi', 'Beagon', 'tyil']
