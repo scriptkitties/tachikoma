@@ -85,6 +85,9 @@ class Controls
 
   match "quit"
   def execute(m)
-    bot.quit
+    adminArray = ['tyiwi', 'Beagon', 'tyil']
+    if adminArray.include? m.user.nick
+      bot.quit
+    end
   end
 end
