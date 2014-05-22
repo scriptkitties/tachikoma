@@ -67,6 +67,22 @@ class Controls
    end
   end
 
+  match(/op (\w+)/i, method: :op)
+  def op(m, user)
+    adminArray = ['tyiwi', 'Beagon', 'tyil']
+    if adminArray.include? m.user.nick
+     m.channel.op user
+   end
+  end
+
+  match(/deop (\w+)/i, method: :deop)
+  def deop(m, user)
+    adminArray = ['tyiwi', 'Beagon', 'tyil']
+    if adminArray.include? m.user.nick
+     m.channel.deop user
+   end
+  end
+
   match "quit"
   def execute(m)
     bot.quit
