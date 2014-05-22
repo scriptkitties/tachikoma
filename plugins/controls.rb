@@ -51,6 +51,22 @@ class Controls
    end
   end
 
+  match(/voice (\w+)/i, method: :voice)
+  def voice(m, user)
+    adminArray = ['tyiwi', 'Beagon', 'tyil']
+    if adminArray.include? m.user.nick
+     m.channel.voice user
+   end
+  end
+
+  match(/devoice (\w+)/i, method: :devoice)
+  def devoice(m, user)
+    adminArray = ['tyiwi', 'Beagon', 'tyil']
+    if adminArray.include? m.user.nick
+     m.channel.devoice user
+   end
+  end
+
   match "quit"
   def execute(m)
     bot.quit
