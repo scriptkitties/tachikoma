@@ -21,6 +21,14 @@ class Epeen
     end
     return true
   end
+  def mutatePeen(m, nick, value, art = "epeen") 
+    if nick.downcase == m.user.nick.downcase
+      return false
+    end
+    if nick == ""
+      nick = m.user.nick;
+    end
+
     c = UserModel.filter(Sequel.ilike(:nickname, nick)).count
 
     if c == 0
@@ -31,9 +39,45 @@ class Epeen
     s = UserStatModel.where(:user_id => u[0].id).all
     s[0].epeen += value
     s[0].save
+    i = 0;
+    peenArt = "";
+    peen = "";
 
-    m.reply "Epeen of #{u[0].nickname} is now #{s[0].epeen}"
+    case art
+    when "epeen"
+      while i < Math.sqrt(s[0].epeen.abs)
+        if s[0].epeen < 0
+          peen += " "
+        else
+          peen += "="
+        end
+        i += 1
+      end
 
+      if s[0].epeen >= 0
+        m.reply "E-peen of #{u[0].nickname} is now 8#{peen}D (#{s[0].epeen})"
+      else
+        m.reply "#{u[0].nickname} has an E-vagoo {(#{peen})} (#{s[0].epeen})"
+      end
+
+    when "boob"
+
+      while i < (Math.sqrt(s[0].epeen.abs) /2)
+        peen += " "
+        i += 1
+      end
+
+      if s[0].epeen > 0
+        m.reply "E-boobs of #{u[0].nickname} are now (#{peen}.#{peen})(#{peen}.#{peen}) (#{s[0].epeen})"
+        elsif s[0].epeen == 0
+        m.reply "E-boobs of #{u[0].nickname} are now . . (#{s[0].epeen}.)"
+        if rand(100) <= 5
+        m.action_reply("thinks that #{u[0].nickname} has some lame ass titties.")
+        end
+        else
+        m.reply "#{u[0].nickname} has no E-boobs. (#{s[0].epeen})"
+      end
+    end
     return true
   end
 
