@@ -18,6 +18,13 @@ class Controls
 
   # todo: invite - Let the bot invite someone (and give this nick +v when it joins)
   # todo: kick - Let the bot kick someone
+  match(/say (.*)/i, method: :say)
+  def say(m, text)
+    adminArray = ['tyiwi', 'Beagon', 'tyil']
+    if adminArray.include? m.user.nick
+     m.reply text
+   end
+  end
   match(/part (\w+)/i, method: :part)
   def part(m, channel)
     adminArray = ['tyiwi', 'Beagon', 'tyil']
