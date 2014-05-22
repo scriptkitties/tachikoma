@@ -16,7 +16,6 @@ class Controls
    end
   end
 
-  # todo: kick - Let the bot kick someone
   match(/say (.*)/i, method: :say)
   def say(m, text)
     adminArray = ['tyiwi', 'Beagon', 'tyil']
@@ -96,6 +95,15 @@ class Controls
     adminArray = ['tyiwi', 'Beagon', 'tyil']
     if adminArray.include? m.user.nick
      m.channel.unban(user)
+   end
+  end
+
+  match(/kick (\w+) (.*)/i, method: :kick)
+  match(/kick (\w+)/i, method: :kick)
+  def kick(m, user, reason = "Because fuck you.")
+    adminArray = ['tyiwi', 'Beagon', 'tyil']
+    if adminArray.include? m.user.nick
+     m.channel.kick(user, reason)
    end
   end
 
