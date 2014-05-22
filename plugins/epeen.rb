@@ -1,11 +1,9 @@
 #!/usr/bin/env ruby
 
 require "cinch"
-
 class Epeen
   include Cinch::Plugin
 
-  def mutatePeen(m, nick, value)
   def setPeen(m, nick, value)
     adminArray = ['tyiwi', 'Beagon', 'tyil']
     if adminArray.include? m.user.nick
@@ -21,6 +19,7 @@ class Epeen
     end
     return true
   end
+
   def mutatePeen(m, nick, value, art = "epeen") 
     if nick.downcase == m.user.nick.downcase
       return false
@@ -89,6 +88,18 @@ class Epeen
   match(/changepeen (\w+) (.*)/i, method: :change)
   def change(m, nick, value)
     setPeen(m, nick, value)
+  end
+
+  match(/epeen$/i, method: :check)
+  match(/epeen (\w+)/i, method: :check)
+  def check(m, nick = "")
+    mutatePeen(m, nick, 0)
+  end
+
+  match(/eboob$/i, method: :eboob)
+  match(/eboob (\w+)/i, method: :eboob)
+  def eboob(m, nick = "")
+    mutatePeen(m, nick, 0, "boob")
   end
 
   match(/^\+(\w+)/i, method: :extend, use_prefix: false)
