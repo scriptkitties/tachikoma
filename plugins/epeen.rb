@@ -69,7 +69,7 @@ class Epeen
       if s[0].epeen > 0
         m.reply "E-boobs of #{u[0].nickname} are now (#{peen}.#{peen})(#{peen}.#{peen}) (#{s[0].epeen})"
         elsif s[0].epeen == 0
-        m.reply "E-boobs of #{u[0].nickname} are now . . (#{s[0].epeen}.)"
+        m.reply "E-boobs of #{u[0].nickname} are now . . (#{s[0].epeen})"
         if rand(100) <= 5
         m.action_reply("thinks that #{u[0].nickname} has some lame ass titties.")
         end
