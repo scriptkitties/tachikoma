@@ -4,74 +4,78 @@ require "cinch"
 class Epeen
   include Cinch::Plugin
 
+  def calcSize(epeen)
+    peen    = "";
+
+    while i < (Math.sqrt(epeen.abs) /2)
+      boob += " "
+      i    += 1
+    end
+
+    return peen
+  end
+
+  def drawBoob(nick, epeen, size)
+    if epeen > 0
+      m.reply "E-boobs of #{nick} are now (#{size}.#{size})(#{size}.#{size}) (#{epeen})"
+    elsif epeen == 0
+      m.reply "E-boobs of #{nick} are now . . (#{epeen})"
+
+      if rand(100) <= 5
+        m.action_reply("thinks that #{nick} is a pretty nice flatchest.")
+      end
+    else
+      m.reply "#{nickname} has no E-boobs. (#{epeen})"
+    end
+  end
+
+  def drawPeen(nick, epeen, size)
+    if epeen >= 0
+      m.reply "E-peen of #{nick} is now 8#{size}D (#{epeen})"
+    else
+      m.reply "#{nick} has an E-vagoo {(#{size})} (#{epeen})"
+    end
+  end
+
   def mutatePeen(m, nick, value, art = "epeen") 
     if nick.downcase == m.user.nick.downcase
       return false
     end
+
+    # Set own nick if no nick was given
     if nick == ""
       nick = m.user.nick;
     end
 
+    # Check if we have this user in the database
     c = UserModel.filter(Sequel.ilike(:nickname, nick)).count
 
     if c == 0
       return false
     end
 
+    # Select the user's stats
     u = UserModel.select(:id, :nickname).filter(Sequel.ilike(:nickname, nick)).all
     s = UserStatModel.where(:user_id => u[0].id).all
+
+    # Mutate epeen
     s[0].epeen += value
     s[0].save
-    i = 0;
-    peenArt = "";
-    peen = "";
 
+    # Draw epeen
     case art
     when "epeen"
-      while i < Math.sqrt(s[0].epeen.abs)
-        if s[0].epeen < 0
-          peen += " "
-        else
-          peen += "="
-        end
-        i += 1
-      end
-
-      if s[0].epeen >= 0
-        m.reply "E-peen of #{u[0].nickname} is now 8#{peen}D (#{s[0].epeen})"
-      else
-        m.reply "#{u[0].nickname} has an E-vagoo {(#{peen})} (#{s[0].epeen})"
-      end
-
-    when "boob"
-
-      while i < (Math.sqrt(s[0].epeen.abs) /2)
-        peen += " "
-        i += 1
-      end
-
-      if s[0].epeen > 0
-        m.reply "E-boobs of #{u[0].nickname} are now (#{peen}.#{peen})(#{peen}.#{peen}) (#{s[0].epeen})"
-        elsif s[0].epeen == 0
-        m.reply "E-boobs of #{u[0].nickname} are now . . (#{s[0].epeen}.)"
-        if rand(100) <= 5
-        m.action_reply("thinks that #{u[0].nickname} has some lame ass titties.")
-        end
-        else
-        m.reply "#{u[0].nickname} has no E-boobs. (#{s[0].epeen})"
-      end
+      drawnPeen(u.nickname, s[0].epeen, calcSize(s[0].epeen))
+    when "eboob"
+      drawBoob(u.nickname, s[0].epeen, calcSize(s[0].epeen))
     end
+
     return true
   end
 
   match(/chop (\w+)/i, method: :chop)
   def chop(m, nick)
     setPeen(m, nick, 0)
-  end
-
-  match(/changepeen (\w+) (.*)/i, method: :change)
-  def change(m, nick, value)
-    setPeen(m, nick, value)
   end
 
   match(/epeen$/i, method: :check)
