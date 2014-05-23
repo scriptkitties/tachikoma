@@ -4,22 +4,6 @@ require "cinch"
 class Epeen
   include Cinch::Plugin
 
-  def setPeen(m, nick, value)
-    adminArray = ['tyiwi', 'Beagon', 'tyil']
-    if adminArray.include? m.user.nick
-      c = UserModel.filter(Sequel.ilike(:nickname, nick)).count
-      if c == 0
-        return false
-      end
-      u = UserModel.select(:id, :nickname).filter(Sequel.ilike(:nickname, nick)).all
-      s = UserStatModel.where(:user_id => u[0].id).all
-      s[0].epeen = value
-      s[0].save
-      m.reply "#{nick}'s E-peen has been changed to #{s[0].epeen}"
-    end
-    return true
-  end
-
   def mutatePeen(m, nick, value, art = "epeen") 
     if nick.downcase == m.user.nick.downcase
       return false
