@@ -6,16 +6,17 @@ class Epeen
 
   def calcSize(epeen)
     peen    = "";
+    i       = 0
 
-    while i < (Math.sqrt(epeen.abs) /2)
-      boob += " "
+    while i < (Math.sqrt(epeen.abs) / 2)
+      peen += " "
       i    += 1
     end
 
     return peen
   end
 
-  def drawBoob(nick, epeen, size)
+  def drawBoob(m, nick, epeen, size)
     if epeen > 0
       m.reply "E-boobs of #{nick} are now (#{size}.#{size})(#{size}.#{size}) (#{epeen})"
     elsif epeen == 0
@@ -25,11 +26,11 @@ class Epeen
         m.action_reply("thinks that #{nick} is a pretty nice flatchest.")
       end
     else
-      m.reply "#{nickname} has no E-boobs. (#{epeen})"
+      m.reply "#{nick} has no E-boobs. (#{epeen})"
     end
   end
 
-  def drawPeen(nick, epeen, size)
+  def drawPeen(m, nick, epeen, size)
     if epeen >= 0
       m.reply "E-peen of #{nick} is now 8#{size}D (#{epeen})"
     else
@@ -65,9 +66,9 @@ class Epeen
     # Draw epeen
     case art
     when "epeen"
-      drawnPeen(u.nickname, s[0].epeen, calcSize(s[0].epeen))
+      drawPeen(m, u[0].nickname, s[0].epeen, calcSize(s[0].epeen))
     when "eboob"
-      drawBoob(u.nickname, s[0].epeen, calcSize(s[0].epeen))
+      drawBoob(m, u[0].nickname, s[0].epeen, calcSize(s[0].epeen))
     end
 
     return true
@@ -87,7 +88,7 @@ class Epeen
   match(/eboob$/i, method: :eboob)
   match(/eboob (\w+)/i, method: :eboob)
   def eboob(m, nick = "")
-    mutatePeen(m, nick, 0, "boob")
+    mutatePeen(m, nick, 0, "eboob")
   end
 
   match(/^\+(\w+)/i, method: :extend, use_prefix: false)
