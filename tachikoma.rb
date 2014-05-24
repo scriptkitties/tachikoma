@@ -29,6 +29,7 @@ Dir[File.dirname(__FILE__)+"/models/*.rb"].each {|file| require file}
 bot = Cinch::Bot.new do
   configure do |c|
     # Server config
+    # @todo: Get these configs from the database
     c.server          = "irc.rizon.net"
     c.port            = 6697
     c.nick            = "tachikoma"
