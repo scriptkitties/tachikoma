@@ -5,19 +5,21 @@ class Epeen
   include Cinch::Plugin
 
   def calcSize(epeen)
-    peen    = "";
+    i = 0
 
-    while i < (Math.sqrt(epeen.abs) /2)
-      boob += " "
-      i    += 1
+    while i < (Math.sqrt(epeen.abs) / 2)
+      i += 1
     end
 
     return peen
   end
 
   def drawBoob(nick, epeen, size)
+    size = size / 2
+    fill = " " * size
+
     if epeen > 0
-      m.reply "E-boobs of #{nick} are now (#{size}.#{size})(#{size}.#{size}) (#{epeen})"
+      m.reply "E-boobs of #{nick} are now (#{fill}.#{fill})(#{fill}.#{fill}) (#{epeen})"
     elsif epeen == 0
       m.reply "E-boobs of #{nick} are now . . (#{epeen})"
 
@@ -30,10 +32,12 @@ class Epeen
   end
 
   def drawPeen(nick, epeen, size)
+    fill = "=" * size
+
     if epeen >= 0
-      m.reply "E-peen of #{nick} is now 8#{size}D (#{epeen})"
+      m.reply "E-peen of #{nick} is now 8#{fill}D (#{epeen})"
     else
-      m.reply "#{nick} has an E-vagoo {(#{size})} (#{epeen})"
+      m.reply "#{nick} has an E-vagoo {(#{fill})} (#{epeen})"
     end
   end
 
