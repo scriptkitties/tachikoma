@@ -27,7 +27,7 @@ class Epeen
         m.action_reply("thinks that #{nick} is a pretty nice flatchest.")
       end
     else
-      m.reply "#{nickname} has no E-boobs. (#{epeen})"
+      m.reply "#{nick} has no E-boobs. (#{epeen})"
     end
   end
 
@@ -69,9 +69,9 @@ class Epeen
     # Draw epeen
     case art
     when "epeen"
-      drawnPeen(u.nickname, s[0].epeen, calcSize(s[0].epeen))
+      drawPeen(m, u[0].nickname, s[0].epeen, calcSize(s[0].epeen))
     when "eboob"
-      drawBoob(u.nickname, s[0].epeen, calcSize(s[0].epeen))
+      drawBoob(m, u[0].nickname, s[0].epeen, calcSize(s[0].epeen))
     end
 
     return true
@@ -91,7 +91,7 @@ class Epeen
   match(/eboob$/i, method: :eboob)
   match(/eboob (\w+)/i, method: :eboob)
   def eboob(m, nick = "")
-    mutatePeen(m, nick, 0, "boob")
+    mutatePeen(m, nick, 0, "eboob")
   end
 
   match(/^\+(\w+)/i, method: :extend, use_prefix: false)
