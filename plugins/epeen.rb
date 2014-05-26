@@ -11,10 +11,10 @@ class Epeen
       i += 1
     end
 
-    return peen
+    return i
   end
 
-  def drawBoob(nick, epeen, size)
+  def drawBoob(m, nick, epeen, size)
     size = size / 2
     fill = " " * size
 
@@ -31,7 +31,7 @@ class Epeen
     end
   end
 
-  def drawPeen(nick, epeen, size)
+  def drawPeen(m, nick, epeen, size)
     fill = "=" * size
 
     if epeen >= 0
@@ -85,13 +85,27 @@ class Epeen
   match(/epeen$/i, method: :check)
   match(/epeen (\w+)/i, method: :check)
   def check(m, nick = "")
-    mutatePeen(m, nick, 0)
+    if nick == ""
+      nick = m.user.nick
+    end
+
+    u = UserModel.select(:id, :nickname).filter(Sequel.ilike(:nickname, nick)).all
+    s = UserStatModel.where(:user_id => u[0].id).all
+
+    drawPeen(m, u[0].nickname, s[0].epeen, calcSize(s[0].epeen))
   end
 
   match(/eboob$/i, method: :eboob)
   match(/eboob (\w+)/i, method: :eboob)
   def eboob(m, nick = "")
-    mutatePeen(m, nick, 0, "eboob")
+    if nick == ""
+      nick = m.user.nick
+    end
+
+    u = UserModel.select(:id, :nickname).filter(Sequel.ilike(:nickname, nick)).all
+    s = UserStatModel.where(:user_id => u[0].id).all
+
+    drawBoob(m, u[0].nickname, s[0].epeen, calcSize(s[0].epeen))
   end
 
   match(/^\+(\w+)/i, method: :extend, use_prefix: false)
