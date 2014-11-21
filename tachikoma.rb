@@ -31,6 +31,7 @@ bot = Cinch::Bot.new do
     # Server config
     # @todo: Get these configs from the database
     c.server          = "irc.rizon.net"
+    c.local_host      = "37.34.59.228"
     c.port            = 6697
     c.nick            = "tachikoma"
     c.user            = "cinch"
@@ -38,7 +39,7 @@ bot = Cinch::Bot.new do
     c.channels        = ["#scriptkitties"]
 
     # SSL config
-    c.ssl.client_cert = "/srv/tachikoma/cert/rizon.pem"
+    c.ssl.client_cert = conf["cert"]
     c.ssl.use         = true
 
     # Loaded plugins
