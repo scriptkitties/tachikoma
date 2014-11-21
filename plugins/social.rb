@@ -5,15 +5,15 @@ require "cinch"
 class Social
   include Cinch::Plugin
 
-  match(/^bye/i, method: :goodbye, use_prefix: false)
-  match(/^hello$|^hi$/i, method: :hello, use_prefix: false)
-
-  def goodbye(m)
-    m.reply "Goodbye, #{m.user.nick}"
-  end
+  match(/(.*)?african\-american(.*)?/, method: :nigger, use_prefix: false)
+  match(/^hi|hello/, method: :hello, use_prefix: false)
 
   def hello(m)
-    m.reply "Hello, #{m.user.nick}!"
+    m.reply "Hi #{m.user.nick}!"
+  end
+
+  def nigger(m, before = "", after = "")
+    m.reply before+Format(:bold, "%s" % ["nigger"])+after
   end
 end
 
