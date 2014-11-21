@@ -5,22 +5,28 @@ require "cinch"
 class Social
   include Cinch::Plugin
 
-  match(/(.*)?african\-american[s]?(.*)?/, method: :nigger, use_prefix: false)
+  match(/(.*)?(african\-american[s]?)(.*)?/, method: :nigger, use_prefix: false)
   match(/^hi|hello/, method: :hello, use_prefix: false)
 
   def hello(m)
     m.reply "Hi #{m.user.nick}!"
   end
 
-  def nigger(m, before = "", after = "")
-    #m.reply before+Format(:bold, "%s" % ["nigger"])+after
-    if (m.params[1] =~ /^.*s$/)
+  def nigger(m, before = "", hit = "", after = "")
+    if hit =~ /^african\-americans$/
       message = "niggers"
-    else
-      message = "a nigger"
     end
 
-    m.reply message
+    if hit =~ /^african\-american$/
+      message = "nigger"
+
+      if before =~ /^(.*)an $/
+        before  = before[0..-4]
+        message = "a "+message
+      end
+    end
+
+    m.reply before+Format(:bold, "%s" % [message])+after
   end
 end
 
