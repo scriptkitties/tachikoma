@@ -63,8 +63,8 @@ bot = Cinch::Bot.new do
   on :leaving do |m, user|
     if m.channel?
       reply = "Bye #{user}! We're going to miss you!"
-      if rand(10) <= 5
-        reply += "(Probably not though)"
+      if rand(10) <= 2
+        reply += " (Probably not though)"
       end
       m.reply reply
     end
