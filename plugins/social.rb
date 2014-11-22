@@ -17,16 +17,18 @@ class Social
       message = "niggers"
     end
 
-    if hit =~ /^african\-american$/
-      message = "nigger"
+    unless (m.user == "tachikoma")
+      if hit =~ /^african\-american$/
+       message = "nigger"
 
-      if before =~ /^(.*)an $/
-        before  = before[0..-4]
-        message = "a "+message
+        if before =~ /^(.*)an $/
+          before  = before[0..-4]
+          message = "a "+message
+        end
       end
-    end
 
-    m.reply before+Format(:bold, "%s" % [message])+after
+      m.reply before+Format(:bold, "%s" % [message])+after
+    end
   end
 end
 
