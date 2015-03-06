@@ -39,20 +39,22 @@ bot = Cinch::Bot.new do
 
   trap "SIGINT" do
     # exit cleanly
-    bot.quit
+    bot.quit "Caught SIGINT"
   end
 
   trap "SIGTERM" do
     # exit cleanly
-    bot.quit
+    bot.quit "Caught SIGTERM"
   end
 
   on :leaving do |m, user|
     if m.channel?
       reply = "Bye #{user}! We're going to miss you!"
+
       if rand(10) <= 2
         reply += " (Probably not though)"
       end
+
       m.reply reply
     end
   end
