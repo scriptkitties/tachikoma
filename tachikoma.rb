@@ -1,62 +1,49 @@
 #!/usr/bin/env ruby
 
-# Require dependencies
-require "cinch"
-require "json"
-require "sequel"
+# require our gems
+require 'cinch'
+require 'yaml'
 
-# Require all of our plugins
-Dir[File.dirname(__FILE__)+"/plugins/*.rb"].each {|file| require file}
+# calculate the base dir of the application
+basedir = File.expand_path(File.dirname(__FILE__))
 
-# Read the configuration file
-conf = JSON.parse(IO.read(File.dirname(__FILE__)+"/conf/tachikoma.json"));
-
-# Create all databases
-$DB = Hash.new
-
-conf["databases"].each do |db|
-  # Generate the DNS
-  dsn = db[1]["driver"]+"://"+db[1]["username"]+":"+db[1]["password"]+"@"+db[1]["host"]+"/"+db[1]["db"]
-
-  # Create the dabatase connection
-  $DB[db[0]] = Sequel.connect(dsn)
+# require our plugins
+Dir[basedir+'/plugins/*.rb'].each do |plugin|
+  require plugin
 end
 
-# Now that we got our database connections, we can also load our models
-Dir[File.dirname(__FILE__)+"/models/*.rb"].each {|file| require file}
-
-# Create the bot instance
+# create the bot instance
 bot = Cinch::Bot.new do
   configure do |c|
-    # Server config
-    # @todo: Get these configs from the database
-    c.server          = "irc.rizon.net"
-    c.local_host      = "37.34.59.228"
-    c.port            = 6697
-    c.nick            = "tachikoma"
-    c.user            = "cinch"
-    c.realname        = "Tachikoma"
-    c.channels        = ["#scriptkitties"]
+    # get the irc config
+    botConf = YAML.load_file(basedir+'/conf/irc.yaml')
+
+    # server config
+    c.server          = botConf['server']['host']
+    c.port            = botConf['server']['port']
+    c.nick            = botConf['bot']['nick']
+    c.user            = botConf['bot']['user']
+    c.realname        = botConf['bot']['realname']
+    c.channels        = botConf['server']['channels']
 
     # SSL config
-    c.ssl.client_cert = conf["cert"]
-    c.ssl.use         = true
+    # @todo: properly setup certificate usage
+    c.ssl.use         = botConf['server']['ssl']['use']
 
-    # Loaded plugins
+    # loaded plugins
     c.plugins.plugins = [
       Controls,
-      Epeen,
       Social
     ]
   end
 
   trap "SIGINT" do
-    # Exit cleanly
+    # exit cleanly
     bot.quit
   end
 
   trap "SIGTERM" do
-    # Exit cleanly
+    # exit cleanly
     bot.quit
   end
 
@@ -69,9 +56,8 @@ bot = Cinch::Bot.new do
       m.reply reply
     end
   end
-
 end
 
-# Start the bot
+# start the bot
 bot.start
 
