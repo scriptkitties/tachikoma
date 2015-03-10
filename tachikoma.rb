@@ -31,8 +31,10 @@ bot = Cinch::Bot.new do
     c.ssl.use         = botConf['server']['ssl']['use']
 
     # loaded plugins
+    # @todo: define this in the configfiles?
     c.plugins.plugins = [
       Controls,
+      Info,
       Social
     ]
   end
