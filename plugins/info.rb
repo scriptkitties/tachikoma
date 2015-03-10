@@ -18,10 +18,7 @@ class Info
   end
 
   def version(m, nick)
-    u = User(nick)
-
-    if !u.unknown?
-      u.ctcp("VERSION")
-    end
+    User(nick).ctcp("VERSION")
   end
 end
+
