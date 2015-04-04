@@ -1,7 +1,8 @@
 ---
 server:
-  host: irc.darenet.org
-  port: 6697
+  host:     irc.darenet.org
+  password: ""
+  port:     6697
   channels:
     - "#scriptkitties"
   ssl:

@@ -20,6 +20,7 @@ bot = Cinch::Bot.new do
 
     # server config
     c.server          = botConf['server']['host']
+    c.password        = botConf['bot']['password']
     c.port            = botConf['server']['port']
     c.nick            = botConf['bot']['nick']
     c.user            = botConf['bot']['user']
