@@ -34,9 +34,9 @@ bot = Cinch::Bot.new do
     # loaded plugins
     # @todo: define this in the configfiles?
     c.plugins.plugins = [
-      Controls,
-      Info,
-      Social
+#      Controls,
+#      Info,
+#      Social
     ]
   end
 
@@ -48,18 +48,6 @@ bot = Cinch::Bot.new do
   trap "SIGTERM" do
     # exit cleanly
     bot.quit "Caught SIGTERM"
-  end
-
-  on :leaving do |m, user|
-    if m.channel?
-      reply = "Bye #{user}! We're going to miss you!"
-
-      if rand(10) <= 2
-        reply += " (Probably not though)"
-      end
-
-      m.reply reply
-    end
   end
 end
 
