@@ -6,7 +6,7 @@ class Social
   include Cinch::Plugin
 
   match(/(.*)?(african\-american[s]?)(.*)?/, method: :nigger, use_prefix: false)
-  match(/^(hi|hello)[\.\!\?]?$/i, method: :hello, use_prefix: false)
+  match(/^(ha?i|hello)[\.\!\?]?$/i, method: :hello, use_prefix: false)
 
   def hello(m)
     m.reply "Hi #{m.user.nick}!"
